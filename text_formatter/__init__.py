@@ -1,4 +1,4 @@
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 import bbcode
 import markdown
 from markdownify import markdownify as md
@@ -76,6 +76,10 @@ def html_to_bbcode(html):
         )
 
     html = re.sub(r'<a href="(.*?)">(.*?)</a>', r"[url=\1]\2[/url]", html)
+
+    # Color processing
+    html = re.sub(r'<span style="color:(.*?);">(.*?)</span>', r"[color=\1]\2[/color]", html)
+    
 
     return html
 
@@ -191,6 +195,8 @@ if __name__ == "__main__":
     example_markdown = """*some bold text here* and some normal text here and also a [markdown link](https://www.google.com)"""
     example_bbcode = """Heres a link https://google.com
 
-also some [b]text[/b] on another line"""
+also some [b]text[/b] on another line
+
+[color=red][b]colored bold text[/b][/color]"""
 
     TextFormatter.from_bbcode(example_bbcode).print_demo()

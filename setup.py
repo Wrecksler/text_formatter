@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='text_formatter',
-    version="0.0.7",
+    version="0.0.8",
     # url='none',
     # author='',
     # author_email='x@x.com',
