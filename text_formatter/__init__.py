@@ -124,21 +124,21 @@ class TextFormatter:
         self._html = html
 
     @classmethod
-    def from_bbcode(cls, bbcode):
+    def from_bbcode(cls, bbcode, **kwargs):
         html = bbcode_to_html(bbcode)
-        return cls(html)
+        return cls(html, **kwargs)
 
     @classmethod
-    def from_html(cls, html):
-        return cls(html)
+    def from_html(cls, html, **kwargs):
+        return cls(html, **kwargs)
 
     @classmethod
-    def from_markdown(cls, markdown):
-        return cls(markdown_to_html(markdown))
+    def from_markdown(cls, markdown, **kwargs):
+        return cls(markdown_to_html(markdown), **kwargs)
 
     @classmethod
-    def from_cf(cls, cf_md):
-        return cls(cf_to_html(cf_md))
+    def from_cf(cls, cf_md, **kwargs):
+        return cls(cf_to_html(cf_md), **kwargs)
 
     @property
     def plaintext(self):
