@@ -1,4 +1,4 @@
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 import bbcode
 import markdown
 from markdownify import markdownify as md
@@ -119,7 +119,7 @@ class TextFormatter:
     
     @html.setter
     def html(self, html):
-        if self.bbcodesafe_html:
+        if self.safe_html:
             html = nh3.clean(html, **self.nh3_kwargs)
         self._html = html
 

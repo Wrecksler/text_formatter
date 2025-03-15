@@ -2,3 +2,4 @@ html2bbcode
 markdown
 markdownify
 bs4
+nh3
