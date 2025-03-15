@@ -109,7 +109,7 @@ class TextFormatter:
     supported_out_formats = ["cf", "html", "bbcode", "markdown", "plaintext"]
 
     def __init__(self, html, safe_html=False, nh3_kwargs={}) -> None:
-        self._html = html
+        self.html = html
         self.safe_html = safe_html
         self.nh3_kwargs = nh3_kwargs
 
