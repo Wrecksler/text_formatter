@@ -1,4 +1,4 @@
-__version__ = "0.0.11"
+__version__ = "0.0.13"
 import bbcode
 import markdown
 from markdownify import markdownify as md
@@ -109,9 +109,10 @@ class TextFormatter:
     supported_out_formats = ["cf", "html", "bbcode", "markdown", "plaintext"]
 
     def __init__(self, html, safe_html=False, nh3_kwargs={}) -> None:
-        self.html = html
         self.safe_html = safe_html
         self.nh3_kwargs = nh3_kwargs
+
+        self.html = html
 
     @property
     def html(self):
