@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='text_formatter',
-    version="0.0.8",
+    version="0.0.9",
     # url='none',
     # author='',
     # author_email='x@x.com',
@@ -12,7 +12,8 @@ setup(
         'markdown',
         'markdownify',
         'bs4',
-        'bbcode'
+        'bbcode',
+        'nh3'
     ],
     packages=find_packages(exclude=['tests', 'tests.*']),
 )

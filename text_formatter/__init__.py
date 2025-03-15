@@ -7,7 +7,7 @@ import urllib.parse
 import re
 from functools import partial
 from bs4 import BeautifulSoup
-
+import nh3
 
 def icon(name, value, options, parent, context):
     fmt = {}
@@ -108,8 +108,20 @@ class TextFormatter:
     supported_in_formats = ["cf", "html", "bbcode", "markdown"]
     supported_out_formats = ["cf", "html", "bbcode", "markdown", "plaintext"]
 
-    def __init__(self, html) -> None:
-        self.html = html
+    def __init__(self, html, safe_html=False, nh3_kwargs={}) -> None:
+        self._html = html
+        self.safe_html = safe_html
+        self.nh3_kwargs = nh3_kwargs
+
+    @property
+    def html(self):
+        return self._html
+    
+    @html.setter
+    def html(self, html):
+        if self.bbcodesafe_html:
+            html = nh3.clean(html, **self.nh3_kwargs)
+        self._html = html
 
     @classmethod
     def from_bbcode(cls, bbcode):
