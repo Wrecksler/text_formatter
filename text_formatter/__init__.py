@@ -1,4 +1,3 @@
-__version__ = "0.0.13"
 import bbcode
 import markdown
 from markdownify import markdownify as md
@@ -8,6 +7,7 @@ import re
 from functools import partial
 from bs4 import BeautifulSoup
 import nh3
+
 
 def icon(name, value, options, parent, context):
     fmt = {}
@@ -19,6 +19,26 @@ def icon(name, value, options, parent, context):
         % fmt
     )
 
+
+def collapse(name, collapse_content, options, parent, context):
+    """name collapse
+    value Some collapsible content
+    options {'collapse': 'Collapsible title'}
+    parent None
+    context {}
+
+    name collapse
+    value Some collapsible content without title
+    options {}
+    parent None
+    context {}"""
+    title = options.get("collapse", "Click to expand")
+
+    return f"""<details>
+<summary>{title}</summary>
+
+{collapse_content}
+</details>"""
 
 def line_all_equal(s, min_length=3):
     if len(s) < min_length:
@@ -54,6 +74,9 @@ bbcode_parser.add_simple_formatter(
     '<img src="https://static.f-list.net/images/eicon/%(value)s.gif" height=50 width=50>',
 )
 bbcode_parser.add_formatter("icon", icon)
+bbcode_parser.add_simple_formatter("code", "[code]\n%(value)s\n[/code]")
+bbcode_parser.add_simple_formatter("heading", "<h1>%(value)s</h1>")
+bbcode_parser.add_formatter("collapse", collapse)
 
 
 def html_to_bbcode(html):
@@ -78,8 +101,9 @@ def html_to_bbcode(html):
     html = re.sub(r'<a href="(.*?)">(.*?)</a>', r"[url=\1]\2[/url]", html)
 
     # Color processing
-    html = re.sub(r'<span style="color:(.*?);">(.*?)</span>', r"[color=\1]\2[/color]", html)
-    
+    html = re.sub(
+        r'<span style="color:(.*?);">(.*?)</span>', r"[color=\1]\2[/color]", html
+    )
 
     return html
 
@@ -117,7 +141,7 @@ class TextFormatter:
     @property
     def html(self):
         return self._html
-    
+
     @html.setter
     def html(self, html):
         if self.safe_html:
@@ -159,11 +183,11 @@ class TextFormatter:
         # print(raw_md)
         regex = "\[(?P<url_text>.*?)\]\((?P<url>.*?)\)"
         for match in re.finditer(regex, raw_md, re.MULTILINE):
-            url_text = match.group('url_text')
-            url = match.group('url')
+            url_text = match.group("url_text")
+            url = match.group("url")
             if url_text.strip() == url.strip():
                 new_link_text = url
-            else: 
+            else:
                 new_link_text = f"{url_text} ( {url } )"
             raw_md = raw_md.replace(
                 match.string[match.start() : match.end()],
@@ -180,11 +204,11 @@ class TextFormatter:
         raw_md = self.markdown
         regex = "\[(?P<url_text>.*?)\]\((?P<url>.*?)\)"
         for match in re.finditer(regex, raw_md, re.MULTILINE):
-            url_text = match.group('url_text')
-            url = match.group('url')
+            url_text = match.group("url_text")
+            url = match.group("url")
             if url_text.strip() == url.strip():
                 new_link_text = url
-            else: 
+            else:
                 new_link_text = f"{url_text} ( <{url }> )"
             raw_md = raw_md.replace(
                 match.string[match.start() : match.end()],
@@ -210,6 +234,10 @@ if __name__ == "__main__":
 
 also some [b]text[/b] on another line
 
-[color=red][b]colored bold text[/b][/color]"""
+[color=red][b]colored bold text[/b][/color]
+
+[collapse=Collapsible title]Some collapsible content[/collapse]
+
+[collapse]Some collapsible content without title[/collapse]"""
 
     TextFormatter.from_bbcode(example_bbcode).print_demo()
