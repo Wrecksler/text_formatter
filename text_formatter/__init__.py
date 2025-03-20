@@ -45,6 +45,27 @@ def heading(name, content, options, parent, context):
 
     return f"""<h{int(level)}>{content}</h{int(level)}>"""
 
+def image(name, content, options, parent, context):
+    src = options.get("img", options.get("src", None))
+    height = options.get("height", None)
+    width = options.get("width", None)
+
+    options_dict = {}
+    if height:
+        options_dict["height"] = height
+    if width:
+        options_dict["width"] = width
+    if src:
+        options_dict["src"] = src
+        options_dict['alt'] = content
+    else:
+        options_dict["src"] = content
+
+    options_string = " ".join([f'{k}="{v}"' for k, v in options_dict.items()])
+
+    return f'<img {options_string}>'
+    
+
 def line_all_equal(s, min_length=3):
     if len(s) < min_length:
         return False
@@ -82,6 +103,7 @@ bbcode_parser.add_formatter("icon", icon)
 bbcode_parser.add_simple_formatter("code", "[code]\n%(value)s\n[/code]")
 bbcode_parser.add_formatter("collapse", collapse)
 bbcode_parser.add_formatter("heading", heading)
+bbcode_parser.add_formatter("img", image)
 
 
 def html_to_bbcode(html):
@@ -244,6 +266,23 @@ also some [b]text[/b] on another line
 [collapse=Collapsible title]Some collapsible content[/collapse]
 
 [collapse]Some collapsible content without title[/collapse]
+
+
+### IMAGES
+
+1.
+[img=httplink]
+
+2.
+[img]httplink[/img]
+
+3.
+[img height=100 width=100 src=httplink]alternative text[/img]
+
+4.
+[img height=100 width=100 alt=alternative text]httplink[/img]
+
+### IMAGES END
 
 
 [collapse=Single quotes in arguments ' will break the parser here sadly]
