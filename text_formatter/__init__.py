@@ -103,6 +103,14 @@ bbcode_parser.add_formatter("icon", icon)
 bbcode_parser.add_formatter("collapse", collapse)
 bbcode_parser.add_formatter("heading", heading)
 bbcode_parser.add_formatter("img", image, replace_links=False)
+bbcode_parser.add_simple_formatter(
+            "code",
+            "<code>%(value)s</code>",
+            render_embedded=False,
+            transform_newlines=Ture,
+            swallow_trailing_newline=False,
+            replace_cosmetic=False,
+        )
 
 
 def html_to_bbcode(html):
@@ -288,5 +296,7 @@ also some [b]text[/b] on another line
 Some content
 [/collapse]
 """
-    example_bbcode = "[code][b]should be skipped[/b][/code]"
+    example_bbcode = """[code][b]should be skipped[/b]
+    
+should be new line[/code]"""
     TextFormatter.from_bbcode(example_bbcode).print_demo()
