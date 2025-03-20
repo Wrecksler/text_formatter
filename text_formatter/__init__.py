@@ -107,7 +107,7 @@ bbcode_parser.add_simple_formatter(
             "code",
             "<code>%(value)s</code>",
             render_embedded=False,
-            transform_newlines=Ture,
+            transform_newlines=True,
             swallow_trailing_newline=False,
             replace_cosmetic=False,
         )
