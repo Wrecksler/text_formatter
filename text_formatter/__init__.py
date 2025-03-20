@@ -100,7 +100,6 @@ bbcode_parser.add_simple_formatter(
     '<img src="https://static.f-list.net/images/eicon/%(value)s.gif" height=50 width=50>',
 )
 bbcode_parser.add_formatter("icon", icon)
-bbcode_parser.add_simple_formatter("code", "[code]\n%(value)s\n[/code]")
 bbcode_parser.add_formatter("collapse", collapse)
 bbcode_parser.add_formatter("heading", heading)
 bbcode_parser.add_formatter("img", image, replace_links=False)
@@ -289,7 +288,5 @@ also some [b]text[/b] on another line
 Some content
 [/collapse]
 """
-
-    example_bbcode = "[img]http://link.com[/img]"
-
+    example_bbcode = "[code][b]should be skipped[/b][/code]"
     TextFormatter.from_bbcode(example_bbcode).print_demo()
