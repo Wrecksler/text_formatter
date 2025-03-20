@@ -103,7 +103,7 @@ bbcode_parser.add_formatter("icon", icon)
 bbcode_parser.add_simple_formatter("code", "[code]\n%(value)s\n[/code]")
 bbcode_parser.add_formatter("collapse", collapse)
 bbcode_parser.add_formatter("heading", heading)
-bbcode_parser.add_formatter("img", image)
+bbcode_parser.add_formatter("img", image, replace_links=False)
 
 
 def html_to_bbcode(html):
@@ -289,5 +289,7 @@ also some [b]text[/b] on another line
 Some content
 [/collapse]
 """
+
+    example_bbcode = "[img]http://link.com[/img]"
 
     TextFormatter.from_bbcode(example_bbcode).print_demo()
