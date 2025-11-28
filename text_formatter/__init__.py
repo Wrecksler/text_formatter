@@ -1,10 +1,8 @@
 import bbcode
 import markdown
-from markdownify import markdownify as md
-from markdownify import MarkdownConverter, abstract_inline_conversion
+from markdownify import MarkdownConverter
 import urllib.parse
 import re
-from functools import partial
 from bs4 import BeautifulSoup
 import nh3
 
@@ -72,11 +70,11 @@ def line_all_equal(s, min_length=3):
     return s == len(s) * s[0]
 
 
-def markup_strong(node, text, convert_as_inline):
+def markup_strong(node, text, convert_as_inline=False, parent_tags=None):
     return f"'''{text}'''"
 
 
-def markup_em(node, text, convert_as_inline):
+def markup_em(node, text, convert_as_inline=False, parent_tags=None):
     return f"''{text}''"
 
 
@@ -296,7 +294,4 @@ also some [b]text[/b] on another line
 Some content
 [/collapse]
 """
-    example_bbcode = """[code][b]should be skipped[/b]
-    
-should be new line[/code]"""
     TextFormatter.from_bbcode(example_bbcode).print_demo()
